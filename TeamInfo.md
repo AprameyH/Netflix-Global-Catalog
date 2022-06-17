@@ -1,4 +1,4 @@
-# TeamID-SampleProject Team
+# livewire-Project1 Team
 
 ## Basic Information
 
@@ -12,7 +12,7 @@
 | Member1     |      asathya2@illinois.edu     |
 | Member2     |   Jeremiah Crowe   |
 | Member2     |      jcrowe6@illinois.edu     |
-| Member3     |   Jin Noh   |
+| Member3     |   Jinseo Noh   |
 | Member3     |      jinseon2@illinois.edu     |
 
 ## Project Information

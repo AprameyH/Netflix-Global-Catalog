@@ -4,16 +4,16 @@
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-| TeamID      |         Team-001       |
-| TeamName    |        SampleTeam      |
-| Captain     |   FirstName LastName   |
-| Captain     |      Captain-Email     |
-| Member1     |   FirstName LastName   |
-| Member1     |      Member2-Email     |
-| Member2     |   FirstName LastName   |
-| Member2     |      Member3-Email     |
-| Member3     |   FirstName LastName   |
-| Member3     |      Member4-Email     |
+| TeamID      |         Team-015       |
+| TeamName    |        Live Wire      |
+| Captain     |   Apramey Hosahalli   |
+| Captain     |      apramey2@illinois.edu     |
+| Member1     |   Abhi Sathya   |
+| Member1     |      asathya2@illinois.edu     |
+| Member2     |   Jeremiah Crowe   |
+| Member2     |      jcrowe6@illinois.edu     |
+| Member3     |   Jin Noh   |
+| Member3     |      jinseon2@illinois.edu     |
 
 ## Project Information
 

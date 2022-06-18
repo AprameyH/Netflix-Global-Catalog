@@ -24,4 +24,4 @@
 | Video Link  |      link_to_video     |
 
 ## Project Summary
-Please put your project summary here
+Please put your project summary here.

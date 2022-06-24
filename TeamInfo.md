@@ -5,7 +5,7 @@
 |   Info      |        Description     |
 | ----------- | ---------------------- |
 | TeamID      |         Team-015       |
-| TeamName    |        Live Wire      |
+| TeamName    |        livewire      |
 | Captain     |   Apramey Hosahalli   |
 | Captain     |      apramey2@illinois.edu     |
 | Member1     |   Abhi Sathya   |

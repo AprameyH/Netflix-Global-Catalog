@@ -1,4 +1,4 @@
-# team015-livewire
+# Team015-livewire
 This is where we'll put some introductory information once our project is more developed.
 
 ---

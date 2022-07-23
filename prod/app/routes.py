@@ -41,7 +41,8 @@ def update(task_id):
 def create():
     """ recieves post requests to add new task """
     data = request.get_json()
-    db_helper.insert_new_task(data['description'])
+    # db_helper.insert_new_task(data['description'])
+    db_helper.insert_new_movie(data['name'], data['synop']) # now need to change part of modal.js
     result = {'success': True, 'response': 'Done'}
     return jsonify(result)
 

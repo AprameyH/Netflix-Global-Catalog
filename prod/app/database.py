@@ -1,5 +1,6 @@
 """Defines all the functions related to the database"""
 from app import db
+import random
 
 def fetch_todo() -> dict:
     """Reads all tasks listed in the todo table
@@ -56,8 +57,8 @@ def update_status_entry(task_id: int, text: str) -> None:
     conn.execute(query)
     conn.close()
 
-
-def insert_new_task(text: str) ->  int:
+# def insert_new_task(text: str) -> int
+def insert_new_movie(name: str, synop: str) ->  int:
     """Insert new task to todo table.
 
     Args:
@@ -67,8 +68,10 @@ def insert_new_task(text: str) ->  int:
     """
 
     conn = db.connect()
-    query = 'Insert Into tasks (task, status) VALUES ("{}", "{}");'.format(
-        text, "Todo")
+    #query = 'Insert Into tasks (task, status) VALUES ("{}", "{}");'.format(
+    #    text, "Todo")
+    query = 'INSERT INTO Movie (movie_id, name, media_type, synopsis) VALUES ("{}", "{}", "{}", "{}");'.format(
+        random.randint(10000000,99999999), name, "movie", synop) # now need to change part of routes.py
     conn.execute(query)
     query_results = conn.execute("Select LAST_INSERT_ID();")
     query_results = [x for x in query_results]

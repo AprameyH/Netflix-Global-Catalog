@@ -24,14 +24,17 @@ $(document).ready(function () {
 
 
     $('#submit-task').click(function () {
-        const tID = $('#task-form-display').attr('taskID');
+        console.log('test!')
+        
         console.log($('#task-modal').find('.form-control').val())
         $.ajax({
             type: 'POST',
-            url: tID ? '/edit/' + tID : '/create',
+            url:'/create',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify({
-                'description': $('#task-modal').find('.form-control').val()
+                // 'description': $('#task-modal').find('.form-control').val()
+                'name': $('#task-modal').find('.form-control').val(),
+                'synop': $('#task-modal').find('.form-control2').val()
             }),
             success: function (res) {
                 console.log(res.response)
@@ -40,7 +43,7 @@ $(document).ready(function () {
             error: function () {
                 console.log('Error');
             }
-        });
+        }); 
     });
 
     $('.remove').click(function () {
@@ -58,6 +61,7 @@ $(document).ready(function () {
         });
     });
 
+    /** 
     $('.state').click(function () {
         const state = $(this)
         const tID = state.data('source')
@@ -85,6 +89,6 @@ $(document).ready(function () {
                 console.log('Error');
             }
         });
-    });
+    }); */
 
 });

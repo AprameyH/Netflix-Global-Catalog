@@ -41,7 +41,7 @@ hr {
 /* bootstrap modifications */
 .container {
     width: auto;
-    max-width: 680px;
+    max-width: 100%;
     padding: 0 15px;
 }
 

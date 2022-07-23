@@ -56,7 +56,7 @@ def create():
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
     """ returns rendered homepage """
-    items = db_helper.fetch_countries()
+    items = db_helper.fetch_movies()
     return render_template("index.html", items=items)
 
 @app.route("/account")
@@ -66,7 +66,7 @@ def accountpage():
     if log_in == "False":
         return redirect("/login")
     
-    items = db_helper.fetch_countries()
+    items = db_helper.fetch_movies()
     return render_template("account.html", items=items, username = username)
 
 @app.route("/login", methods=['GET', 'POST'])

@@ -53,22 +53,24 @@
 
     </div>
 
-    <!--Todo Table-->
+    <!--Movie Results Table-->
     <div class="container table-responsive">          
     <table class="table">
         <thead>
         <tr>
-            <th class="Movie">Movie</th>
-            <th class="Synopsis">Synopsis</th>
-            <th class="Cast">Cast</th>
+            <th class="t_movie_name">Movie Name</th>
+            <th class="t_media_type">Type</th>
+            <th class="t_synopsis">Synopsis</th>
         </tr>
         </thead>
 
         <tbody>
         {% for item in items %}
             <tr>
-                <td>{{item.id}}</td>
-                <td>{{item.task}}</td>
+                <td width="10%">{{item.name}}</td>
+                <td width="10%">{{item.media_type}}</td>
+                <td width="80%">{{item.synopsis}}</td>
+                
             </tr>
         {% endfor %}
         

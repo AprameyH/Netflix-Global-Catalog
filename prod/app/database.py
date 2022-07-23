@@ -25,6 +25,7 @@ def fetch_movies() -> dict:
     return todo_list
 
 
+
 def update_task_entry(task_id: int, text: str) -> None:
     """Updates task description based on given `task_id`
 

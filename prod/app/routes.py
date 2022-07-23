@@ -50,5 +50,5 @@ def create():
 @app.route("/")
 def homepage():
     """ returns rendered homepage """
-    items = db_helper.fetch_todo()
+    items = db_helper.fetch_movies()
     return render_template("index.html", items=items)

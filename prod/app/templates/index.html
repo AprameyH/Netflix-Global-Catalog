@@ -23,13 +23,31 @@
       <p><mark>Where are those movies at?</mark></p>
     </main>
     
+    <div class="container">
+        <form>
+            <div class="form-group">
+              <label for="search_entry">Search Movies by Title</label>
+              <input type="text" class="form-control" id="searchInput" placeholder="Enter title search">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
 
     <div class="container">    
         
         <!-- Button trigger modal -->
-        <div style="text-align: right;">
-        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="New Task">Add Task</button>
+        <div style="text-align: center;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="New Task">Add a movie</button>
+
         </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#adv-query1">Advanced Query 1</button>
+    
+            </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#adv-query2">Advanced Query 2</button>
+    
+            </div>
 
         
         <div class="modal fade" id="task-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
@@ -57,14 +75,15 @@
 
     </div>
 
-    <!--Todo Table-->
+    <!--Movie Results Table-->
     <div class="container table-responsive">          
     <table class="table">
         <thead>
         <tr>
-            <th class="task-id">#</th>
-            <th class="task">Task Name</th>
-            <th class="status">Status</th>
+            <th class="t_movie_id">#</th>
+            <th class="t_movie_name">Movie Name</th>
+            <th class="t_media_type">Media</th>
+            <th class="t_synopsis">Synopsis</th>
             <th class="update">Edit</th>
             <th class="update">Remove</th>
         </tr>
@@ -73,18 +92,10 @@
         <tbody>
         {% for item in items %}
             <tr>
-                <td>{{item.id}}</td>
-                <td>{{item.task}}</td>
-
-                {% if item.status == "In Progress" %}
-                    <td><button type="button" class="btn btn-outline-warning btn-sm state" data-source="{{item.id}}">{{item.status}}</button></td>
-                {%endif%}
-                {% if item.status == "Todo" %}
-                    <td><button type="button" class="btn btn-outline-secondary btn-sm state" data-source="{{item.id}}">{{item.status}}</button></td>
-                {%endif%}
-                {% if item.status == "Complete" %}
-                    <td><button type="button" class="btn btn-outline-success btn-sm state" data-source="{{item.id}}">{{item.status}}</button></td>
-                {%endif%}
+                <td>{{item.movie_id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.media_type}}</td>
+                <td>{{item.synopsis}}</td>
                 
                 <td><button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="{{item.id}}" data-content="{{item.task}}"><i class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
 
@@ -100,7 +111,7 @@
 
     <footer class="footer">
       <div class="container">
-            <p class="text-muted"><small>App developed for CS411 UIUC by @tcheng10</small></p>
+            <p class="text-muted"><small>Based on example code by @tcheng10</small></p>
       </div>
     </footer>
   </body>

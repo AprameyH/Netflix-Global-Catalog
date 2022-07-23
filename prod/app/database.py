@@ -2,7 +2,7 @@
 from app import db
 import random
 
-def fetch_countries() -> dict:
+def fetch_movies() -> dict:
     """Reads all tasks listed in the todo table
 
     Returns:
@@ -10,15 +10,15 @@ def fetch_countries() -> dict:
     """
 
     conn = db.connect()
-    query_results = conn.execute(
-        "Select * from Country where country_name not like '___' and country_name not like '__';").fetchall()
+    query_results = conn.execute("SELECT movie_id, name, media_type, synopsis FROM Movie LIMIT 100;").fetchall()
     conn.close()
     todo_list = []
     for result in query_results:
         item = {
-            "id": result[0],
-            "task": result[1],
-            "status": "foo"
+            "movie_id": result[0],
+            "name": result[1],
+            "media_type": result[2],
+            "synopsis": result[3]
         }
         todo_list.append(item)
 

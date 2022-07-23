@@ -2,7 +2,7 @@
 from app import db
 import random
 
-def fetch_todo() -> dict:
+def fetch_countries() -> dict:
     """Reads all tasks listed in the todo table
 
     Returns:
@@ -10,7 +10,8 @@ def fetch_todo() -> dict:
     """
 
     conn = db.connect()
-    query_results = conn.execute("Select * from Country;").fetchall()
+    query_results = conn.execute(
+        "Select * from Country where country_name not like '___' and country_name not like '__';").fetchall()
     conn.close()
     todo_list = []
     for result in query_results:

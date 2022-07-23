@@ -14,14 +14,13 @@ def init_connection_engine():
         pool -- a connection to GCP MySQL
     """
 
-
     # detect env local or gcp
     if os.environ.get('GAE_ENV') != 'standard':
         try:
             variables = load(open("app.yaml"), Loader=Loader)
         except OSError as e:
             print("Make sure you have the app.yaml file setup")
-            os.exit()
+            exit()
 
         env_variables = variables['env_variables']
         for var in env_variables:

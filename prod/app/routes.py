@@ -1,7 +1,12 @@
 """ Specifies routing for the application"""
-from flask import render_template, request, jsonify
+from os import uname
+from flask import redirect, render_template, request, jsonify
 from app import app
 from app import database as db_helper
+
+#GLOBAL VARIABLES
+log_in = "False"
+username = "USER"
 
 @app.route("/delete/<int:task_id>", methods=['POST'])
 def delete(task_id):
@@ -37,6 +42,7 @@ def update(task_id):
     return jsonify(result)
 
 
+
 @app.route("/create", methods=['POST'])
 def create():
     """ recieves post requests to add new task """
@@ -47,8 +53,38 @@ def create():
     return jsonify(result)
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def homepage():
     """ returns rendered homepage """
-    items = db_helper.fetch_todo()
+    items = db_helper.fetch_countries()
     return render_template("index.html", items=items)
+
+@app.route("/account")
+def accountpage():
+    global log_in
+
+    if log_in == "False":
+        return redirect("/login")
+    
+    items = db_helper.fetch_countries()
+    return render_template("account.html", items=items, username = username)
+
+@app.route("/login", methods=['GET', 'POST'])
+def loginpage():
+    global log_in
+    global username
+    """ displays login page and gets email """
+    log_in = False
+    if request.method =='POST':
+        if len(request.form['uemail']) != 0 and request.form['uemail'].find("@") != -1:
+            
+            username = request.form['uname']
+            log_in = "True"
+            
+            return redirect("/account")
+        else:
+            log_in = "False"
+            return render_template("login.html", error="Please enter a valid email")
+            
+    return render_template("login.html", error="")
+    

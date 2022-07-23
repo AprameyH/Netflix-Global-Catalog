@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Demo: Netflix Catalog</title>
+        <title> My Account</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,31 +21,20 @@
     <body>
     <main role="main" class="container extra-bottom">
       <div style="text-align: right;">
-        <button type="button" class="btn btn-outline-info btn-sm" onclick="window.location.href='/account';">My Account </button>
+        <button type="button" class="btn btn-outline-info btn-sm" onclick="window.location.href='/login';"> Not {{username}}? </button>
       </div>
-      <h1 class="mt-5">Netflix Global Catalog</h1>
-      <p><mark>Where are those movies at?</mark></p>
+      <h1 class="mt-5">Hi {{username}}!</h1>
+      <p><mark>Here are some recommendations based on your past searches</mark></p>
     </main>
     
 
     <div class="container">    
         
         <!-- Button trigger modal -->
-        <div style="text-align: right;">
-        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="New Task">Add Task</button>
-        </div>
-        
-        <div class="topnav">
-            <input type="text" placeholder="Search..">
-        </div>
         
         <div class="modal fade" id="task-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="Label">Add a movie</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
 
             <div class="modal-body">
                 <div class="input-group mb-3">
@@ -69,11 +58,9 @@
     <table class="table">
         <thead>
         <tr>
-            <th class="task-id">Country ID</th>
-            <th class="task">Country</th>
-            <th class="status">Status</th>
-            <th class="update">Edit</th>
-            <th class="update">Remove</th>
+            <th class="Movie">Movie</th>
+            <th class="Synopsis">Synopsis</th>
+            <th class="Cast">Cast</th>
         </tr>
         </thead>
 
@@ -82,20 +69,6 @@
             <tr>
                 <td>{{item.id}}</td>
                 <td>{{item.task}}</td>
-
-                {% if item.status == "In Progress" %}
-                    <td><button type="button" class="btn btn-outline-warning btn-sm state" data-source="{{item.id}}">{{item.status}}</button></td>
-                {%endif%}
-                {% if item.status == "Todo" %}
-                    <td><button type="button" class="btn btn-outline-secondary btn-sm state" data-source="{{item.id}}">{{item.status}}</button></td>
-                {%endif%}
-                {% if item.status == "Complete" %}
-                    <td><button type="button" class="btn btn-outline-success btn-sm state" data-source="{{item.id}}">{{item.status}}</button></td>
-                {%endif%}
-                
-                <td><button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="{{item.id}}" data-content="{{item.task}}"><i class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
-
-                <td><button class="btn btn-outline-secondary btn-sm remove" data-source="{{item.id}}" type="button"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button></td>
             </tr>
         {% endfor %}
         

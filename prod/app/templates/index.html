@@ -28,11 +28,20 @@
     </main>
     
     <div class="container">
-        <form>
+        <form action="" method="post">
             <div class="form-group">
               <label for="search_entry">Search Movies by Title</label>
-              <input type="text" class="form-control" id="searchInput" placeholder="Enter title search">
+              <input type="text" class="form-control" id="searchInput" name="searchBar" placeholder="Enter title search">
             </div>
+            <div>
+            <label for="Country">Choose a Country:</label>
+            <select name="countrydropdown" id="country_id">
+                <option value=All onclick="">All</option>
+                {% for country in clist %}
+                    <option value={{country}}>{{country}}</option>
+                {% endfor %}
+            </select>
+        </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>
@@ -44,19 +53,6 @@
         <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="New Task">Add a movie</button>
 
         </div>
-        
-        <div class="topnav">
-            <input type="text" placeholder="Search..">
-        </div>
-        <div style="text-align: center;">
-            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#adv-query1">Advanced Query 1</button>
-    
-            </div>
-        <div style="text-align: center;">
-            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#adv-query2">Advanced Query 2</button>
-    
-            </div>
-
         
         <div class="modal fade" id="task-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
         <div class="modal-dialog">
@@ -88,26 +84,22 @@
     <table class="table">
         <thead>
         <tr>
-            <th class="t_movie_id">#</th>
+      
             <th class="t_movie_name">Movie Name</th>
             <th class="t_media_type">Media</th>
             <th class="t_synopsis">Synopsis</th>
-            <th class="update">Edit</th>
-            <th class="update">Remove</th>
+        
         </tr>
         </thead>
 
         <tbody>
         {% for item in items %}
             <tr>
-                <td>{{item.movie_id}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.media_type}}</td>
-                <td>{{item.synopsis}}</td>
                 
-                <td><button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="{{item.id}}" data-content="{{item.task}}"><i class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
-
-                <td><button class="btn btn-outline-secondary btn-sm remove" data-source="{{item.id}}" type="button"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button></td>
+                <td width="10%">{{item.name}}</td>
+                <td width="10%">{{item.media_type}}</td>
+                <td width="80%">{{item.synopsis}}</td>
+                
             </tr>
         {% endfor %}
         

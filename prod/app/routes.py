@@ -121,12 +121,16 @@ def updatepage():
         newname = request.form['newname']
         newemail = request.form['newemail']
         if len(newname.strip()) != 0 and len(newemail.strip()) != 0 and newemail.find("@") != -1:
-            db_helper.update_user(oldemail, newname, newemail)
-            return redirect("/account")
-        
+            status = db_helper.update_user(oldemail, newname, newemail)
+            if status == 404:
+                return render_template("updateuser.html", error="There is no account associated with that old email address")
+            elif status == 300:
+                return render_template("updateuser.html", error="The new email is already taken")
+            else:
+                return redirect("/account")
         else:
-            return render_template("updateuser.html", error="Please enter a valid email")
-            
+            return render_template("updateuser.html", error="The new email is invalid")
+
     return render_template("updateuser.html", error="")
 
 

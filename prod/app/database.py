@@ -88,6 +88,9 @@ def recommend_movies(current_email) -> dict:
     conn = db.connect()
     query_results = conn.execute(
         'SELECT user_id FROM User WHERE email ="{}";'.format(current_email)).fetchall()
+    if len(query_results) == 0:
+        conn.close()
+        return []
     user_id = query_results[0][0]
 
     #Get the most recently searched movie id
@@ -220,9 +223,23 @@ def update_user(oldemail: str, name: str, email: str) -> int:
     """
 
     conn = db.connect()
-    #query = 'Insert Into tasks (task, status) VALUES ("{}", "{}");'.format(
-    #    text, "Todo")
-    query = 'UPDATE User SET username = "{}", email = "{}" WHERE email LIKE "{}";'.format(name, email, oldemail)
+    count_q = 'SELECT COUNT(*) FROM User WHERE email LIKE "{}";'.format(oldemail)
+    count = (conn.execute(count_q).fetchall())
+    count = count[0][0]
+    if count == 0:
+        conn.close()
+        return 404
+    
+    count_q = 'SELECT COUNT(*) FROM User WHERE email LIKE "{}";'.format(email)
+    countnew = (conn.execute(count_q).fetchall())
+    countnew = countnew[0][0]
+    
+    if countnew != 0:
+        conn.close()
+        return 300
+    
+    query = 'UPDATE User SET username = "{}", email = "{}" WHERE email LIKE "{}";'.format(
+        name, email, oldemail)
     
     conn.execute(query)
 

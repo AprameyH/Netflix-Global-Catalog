@@ -53,6 +53,7 @@ def search_movies(input, current_email, country="All") -> dict:
 
     if country != "All":
         advanced_query2 = 'SELECT movie_id, name, media_type, synopsis, country_name FROM (SELECT movie_id, country_name FROM Movie M NATURAL JOIN Availability A NATURAL JOIN Country C WHERE country_name = "{}") AS T NATURAL JOIN Movie M WHERE name LIKE "%%{}%%" ORDER By name;'.format(country, input)
+
         query_results = conn.execute(advanced_query2).fetchall()
     else:
         query2 = 'SELECT movie_id, name, media_type, synopsis, country_name FROM (SELECT movie_id, country_name FROM Movie M NATURAL JOIN Availability A NATURAL JOIN Country C) AS T NATURAL JOIN Movie M WHERE name LIKE "%%{}%%" ORDER By name;'.format(input)
@@ -70,13 +71,17 @@ def search_movies(input, current_email, country="All") -> dict:
 
     if current_email != None and len(todo_list) != 0:
         conn = db.connect()
+
         query_results = conn.execute('SELECT user_id FROM User WHERE email ="{}";'.format(current_email)).fetchall()
-        
+
+        if len(query_results) == 0:
+            conn.close()
+            return []
         user_id = query_results[0][0]
-        print("Breaking?", todo_list)
         movie_id = todo_list[0]["movie_id"]
         search_insert ='INSERT INTO Search(user_id, search_text, movie_id) VALUES("{}", "{}", "{}")'.format(
             user_id, input, movie_id)
+        
         conn.execute(search_insert)
         conn.close()
     
@@ -88,18 +93,21 @@ def recommend_movies(current_email) -> dict:
     conn = db.connect()
     query_results = conn.execute(
         'SELECT user_id FROM User WHERE email ="{}";'.format(current_email)).fetchall()
+    
     if len(query_results) == 0:
         conn.close()
         return []
     user_id = query_results[0][0]
 
     #Get the most recently searched movie id
+    
     query = 'SELECT movie_id FROM Search WHERE user_id = {} ORDER by search_id DESC LIMIT 1;'.format(user_id)
     query_results = conn.execute(query).fetchall()
+
     if len(query_results)==0:
         conn.close()
         return []
-    
+
     recentsearchid = query_results[0][0]
 
     # Get the movie name and director name
@@ -108,10 +116,12 @@ def recommend_movies(current_email) -> dict:
     if len(query_results) == 0:
         conn.close()
         return []
+
     movie_name = query_results[0][0]
     director_name = query_results[0][1]
     
     advanced_query_1 = '(SELECT M.name, M.media_type, M.synopsis FROM Movie M LEFT JOIN Cast C ON M.movie_id=C.movie_id WHERE C.role="Director" AND C.name = "{}") UNION (SELECT name, media_type, synopsis FROM Movie M NATURAL JOIN Genre G WHERE genre IN (SELECT genre FROM Movie M NATURAL JOIN Genre G WHERE name="{}"))'.format(director_name, movie_name)
+
     query_results = conn.execute(advanced_query_1).fetchall()
     if len(query_results) == 0:
         conn.close()

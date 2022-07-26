@@ -65,11 +65,11 @@ def homepage():
         selected_country = request.form["countrydropdown"]
         items2 = db_helper.fetch_movies(selected_country)
         input = request.form['searchBar']
-        print("input is:", input)
+
         if input != None:
-            print("Calling search movies")
+
             items2 = db_helper.search_movies(input, current_email, selected_country)
-            print("Finished search movies")
+
 
         return render_template("index.html", items=items2, clist = clist2)
 

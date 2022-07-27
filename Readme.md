@@ -1,7 +1,10 @@
 # Team015-livewire
-This is where we'll put some introductory information once our project is more developed.
 
 ---
+
+## Demo Video
+https://youtu.be/vMuZC3_G1vA
+
 
 ## Permission
 The repo is private.

@@ -4,7 +4,10 @@
 4. First, we did not implement a Favorites table. This was an extra feature we envisioned but it was not necessary for our core functionality. Additionally, we added a table called Recommendation when we realized that the task of generating recommendations would be much easier if it were included in our schema. This proved to be much easier to work with.
 5. As mentioned, we removed the favorites feature. We added the additional feature of adding new movies to the database, and the ability for users to update/delete their accounts.
 6. The advanced query for country availability is essential to the core functionality of our site. The recommendation advanced query adds another key feature to be enjoyed by users of the site.
-7. 
+7. Jeremiah - loading the data proved to be time consuming, both unwrapping the data from JSON into a table format and time taken to upload, it ended up taking longer than anticipated. 
+Apramey - Implementing a functioning creative component was challenging with our initial table schemas and process. However, once we adjusted our schemas and added an additional table to keep track of recommendations, the task became much easier.
+Jin - I never used node.js before and it was so difficult than other languages, so moved to flask.  Flask is easier than node.js but still struggled to connect database to gcp.
+Abhi - We found that starting with a blank slate for the front end daunting and did not know how to start. Writing a large amount of html code without a clear goal was difficult. We used the demo application provided to understand the various components available to us
 8. The method of displaying the movies differed from our original conception.
 9. The user login system could be improved upon. Managing sessions should likely not be handled by the database.
 10. Work was divided mostly evenly. As a team we could have worked better to begin working earlier each deadline - we often began work with a few days to go. But each team member contributed at each stage. 

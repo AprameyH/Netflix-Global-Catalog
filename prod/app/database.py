@@ -83,10 +83,13 @@ def search_movies(input, current_email, country="All") -> dict:
             return []
         user_id = query_results[0][0]
         movie_id = todo_list[0]["movie_id"]
+
         search_insert ='INSERT INTO Search(user_id, search_text, movie_id) VALUES("{}", "{}", "{}")'.format(
             user_id, input, movie_id)
-        
+
         conn.execute(search_insert)
+
+
         conn.close()
         
         connection = db.raw_connection()
@@ -97,6 +100,7 @@ def search_movies(input, current_email, country="All") -> dict:
             cursor.callproc("addRecommend", [current_email])
             results = list(cursor.fetchall())
             cursor.close()
+            print("Cursor called")
             connection.commit()
         finally:
             connection.close()
@@ -122,6 +126,7 @@ def recommend_movies(current_email) -> dict:
     # Get user_id
     query_results = conn.execute(
         'SELECT user_id FROM User WHERE email ="{}";'.format(current_email)).fetchall()
+    print('SELECT user_id FROM User WHERE email ="{}";'.format(current_email))
     user_id = query_results[0][0]
     
     # Get recos from table

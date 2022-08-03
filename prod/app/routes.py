@@ -81,7 +81,7 @@ def accountpage():
     global current_email
     if log_in == False:
         return redirect("/login")
-    
+    print(current_email)
     items = db_helper.recommend_movies(current_email)
     return render_template("account.html", items=items, username = current_username)
 
@@ -127,6 +127,7 @@ def updatepage():
             elif status == 300:
                 return render_template("updateuser.html", error="The new email is already taken")
             else:
+                current_email = newemail
                 return redirect("/account")
         else:
             return render_template("updateuser.html", error="The new email is invalid")
@@ -141,4 +142,6 @@ def deleteuser():
 
     if current_email != None and current_username != None:
         db_helper.delete_user(current_username, current_email)
+        current_email = None
+        current_username = ""
     return redirect("/login")

@@ -1,4 +1,5 @@
 """Defines all the functions related to the database"""
+from asyncio import QueueEmpty
 from app import db
 import random
 
@@ -59,6 +60,9 @@ def search_movies(input, current_email, country="All") -> dict:
         query2 = 'SELECT movie_id, name, media_type, synopsis, country_name FROM (SELECT movie_id, country_name FROM Movie M NATURAL JOIN Availability A NATURAL JOIN Country C) AS T NATURAL JOIN Movie M WHERE name LIKE "%%{}%%" ORDER By name;'.format(input)
         query_results = conn.execute(query2).fetchall()
     conn.close()
+
+    
+    
     todo_list = []
     for result in query_results:
         item = {
@@ -84,49 +88,51 @@ def search_movies(input, current_email, country="All") -> dict:
         
         conn.execute(search_insert)
         conn.close()
+        
+        connection = db.raw_connection()
+
+
+        try:
+            cursor = connection.cursor()
+            cursor.callproc("addRecommend", [current_email])
+            results = list(cursor.fetchall())
+            cursor.close()
+            connection.commit()
+        finally:
+            connection.close()
+
+        print(results)
+        # query = 'CALL addRecommend("{}")'.format(current_email)
+        # query_results = conn.execute(query).fetchall()
+        # print("Ran query", query_results)
+        # conn.close()
     
     return todo_list
 
 
 def recommend_movies(current_email) -> dict:
     # We first need the director name and the movie name of the most recently searched movie
+    # Check if Logged In
+    if current_email == None:
+        return []
+
+
     conn = db.connect()
+
+    # Get user_id
     query_results = conn.execute(
         'SELECT user_id FROM User WHERE email ="{}";'.format(current_email)).fetchall()
-    
-    if len(query_results) == 0:
-        conn.close()
-        return []
     user_id = query_results[0][0]
-
-    #Get the most recently searched movie id
     
-    query = 'SELECT movie_id FROM Search WHERE user_id = {} ORDER by search_id DESC LIMIT 1;'.format(user_id)
-    query_results = conn.execute(query).fetchall()
+    # Get recos from table
+    query_results = conn.execute(
+        'SELECT R.movie_name, R.movie_type, R.movie_synopsis FROM Recommendation R RIGHT JOIN(SELECT DISTINCT movie_name FROM Recommendation WHERE user_id={}) subq ON R.movie_name=subq.movie_name ORDER By R.recommendation_id DESC LIMIT 100'.format(user_id)).fetchall()
 
-    if len(query_results)==0:
-        conn.close()
-        return []
-
-    recentsearchid = query_results[0][0]
-
-    # Get the movie name and director name
-    query = 'SELECT M.name, C.name FROM Movie M JOIN Cast C ON M.movie_id = C.movie_id WHERE M.movie_id = {} AND C.role = "Director"'.format(recentsearchid)
-    query_results = conn.execute(query).fetchall()
-    if len(query_results) == 0:
-        conn.close()
-        return []
-
-    movie_name = query_results[0][0]
-    director_name = query_results[0][1]
-    
-    advanced_query_1 = '(SELECT M.name, M.media_type, M.synopsis FROM Movie M LEFT JOIN Cast C ON M.movie_id=C.movie_id WHERE C.role="Director" AND C.name = "{}") UNION (SELECT name, media_type, synopsis FROM Movie M NATURAL JOIN Genre G WHERE genre IN (SELECT genre FROM Movie M NATURAL JOIN Genre G WHERE name="{}"))'.format(director_name, movie_name)
-
-    query_results = conn.execute(advanced_query_1).fetchall()
-    if len(query_results) == 0:
-        conn.close()
-        return []
     conn.close()
+
+    if len(query_results) == 0:
+        return []
+
     rec_list = []
     for result in query_results:
         item = {

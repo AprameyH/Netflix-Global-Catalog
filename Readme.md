@@ -6,6 +6,9 @@ Home Page
 <img width="1705" alt="Screen Shot 2022-08-19 at 12 48 57 AM" src="https://user-images.githubusercontent.com/54759777/185571287-3297a438-b5e8-4988-9829-4bb8d55e1c83.png">
 
 User Page
+
+The user page recommends movies based on the user's most recent searches according to genre, director, and other factors.
+
 <img width="1707" alt="Screen Shot 2022-08-19 at 12 47 03 AM" src="https://user-images.githubusercontent.com/54759777/185571256-cf4dea2c-4aa2-46c2-a93e-7568f6195bee.png">
 
 
